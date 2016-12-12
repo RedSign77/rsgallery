@@ -79,3 +79,20 @@ function generate_bootstrap_buttons($buttons)
     return $html;
 }
 
+function getVars($key = null)
+{
+    $args = arg();
+    if ($key === null || !array_key_exists($key, $args)) {
+        return $args;
+    } else {
+        return $args[$key];
+    }
+}
+
+function getGetVars()
+{
+    $args = $_GET;
+    unset($args['q']);
+
+    return $args;
+}
