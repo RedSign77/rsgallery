@@ -1,0 +1,81 @@
+<?php
+
+/**
+ * RS Gallery module
+ *
+ * @author      Németh Zoltán
+ * @date        2016-04-14
+ * @copyright   2016, Németh Zoltán
+ */
+
+include_once 'constants.php';
+module_load_include('inc', 'rsgallery', 'inc/gallery.admin');
+module_load_include('inc', 'rsgallery', 'inc/gallery.public');
+
+function rsgallery_menu()
+{
+    $items = array();
+	$items[RSG_PUBLIC_ROOT . '/%'] = array(
+		'title'            => 'Galleries',
+		'page callback'    => 'rsg_pp_router',
+		'page arguments'   => array(1),
+		'access arguments' => array('rsgallery'),
+		'type'             => MENU_CALLBACK | MENU_VISIBLE_IN_BREADCRUMB,
+	);
+    $items[RSG_ADMIN_ROOT] = array(
+        'title'            => 'Galleries',
+        'page callback'    => 'rsg_ap_router',
+        'page arguments'   => array(1),
+        'access arguments' => array('rsgallery admin'),
+        'type'             => MENU_NORMAL_ITEM | MENU_VISIBLE_IN_BREADCRUMB,
+        'menu_name'        => 'management',
+    );
+    $items[RSG_ADMIN_ROOT . '/%'] = array(
+        'title'            => 'Galleries',
+        'page callback'    => 'rsg_ap_router',
+        'page arguments'   => array(2),
+        'access arguments' => array('rsgallery admin'),
+        'type'             => MENU_CALLBACK | MENU_VISIBLE_IN_BREADCRUMB,
+    );
+    return $items;
+}
+
+function rsgallery_permission()
+{
+    return array(
+        'rsgallery' => array(
+            'title' => 'Galleries',
+            'description' => 'Public access of galleries.',
+        ),
+        'rsgallery admin' => array(
+            'title' => 'Galleries administration',
+            'description' => 'Administrator access of the galleries configuration pages.',
+        ),
+    );
+}
+
+function getNodeBody($nodeId, $lang = null, $safe = true)
+{
+    global $language;
+    if ($lang === null) {
+        $lang = $language->language;
+    }
+    $node = node_load($nodeId);
+    $body = field_get_items('node', $node, 'body', $lang);
+    if ($safe) {
+        return $body[0]['safe_value'];
+    }
+    return $body[0]['value'];
+}
+
+
+function generate_bootstrap_buttons($buttons)
+{
+    $html = '<div class="button-box">';
+    foreach ($buttons as $url => $button) {
+        $html .= '<a class="btn ' . $button['style'] . '" href="' . url($url) . '">' . $button['title'] . '</a>';
+    }
+    $html .= '</div>';
+    return $html;
+}
+

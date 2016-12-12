@@ -1,0 +1,239 @@
+<?php
+
+include_once 'constants.php';
+
+function rsgallery_schema()
+{
+    $schema = array();
+    $schema[RSG_TBL_GALLERY] = array(
+        'description' => 'Collection of the galleries',
+        'fields' => array(
+            'id' => array(
+                'type' => 'serial',
+                'size' => 'big',
+                'description' => 'Gallery Id',
+                'unsigned' => true,
+                'not null' => true,
+            ),
+            'created_at' => array(
+                'type' => 'datetime',
+                'mysql_type' => 'datetime',
+                'pgsql_type' => 'timestamp without time zone',
+                'not null' => true,
+            ),
+            'updated_at' => array(
+                'type' => 'datetime',
+                'mysql_type' => 'datetime',
+                'pgsql_type' => 'timestamp without time zone',
+                'not null' => false,
+            ),
+            'user_id' => array(
+                'type' => 'int',
+                'size' => 'big',
+                'description' => 'User Id',
+                'unsigned' => true,
+                'not null' => true,
+            ),
+            'ip' => array(
+                'type' => 'varchar',
+                'length' => 100,
+                'not null' => true,
+            ),
+            'label' => array(
+                'type' => 'varchar',
+                'length' => 255,
+                'not null' => true,
+            ),
+            'image' => array(
+                'type' => 'varchar',
+                'length' => 255,
+                'not null' => true,
+            ),
+            'status' => array(
+                'type' => 'int',
+                'size' => 'normal',
+                'not null' => true,
+                'unsigned' => true,
+            ),
+            'tags' => array(
+                'type' => 'varchar',
+                'length' => 255,
+                'not null' => false,
+            ),
+        ),
+        'primary key' => array('id'),
+    );
+    $schema[RSG_TBL_PICTURE] = array(
+        'description' => 'Collection of the pictures',
+        'fields' => array(
+            'id' => array(
+                'type' => 'serial',
+                'size' => 'big',
+                'description' => 'Picture Id',
+                'unsigned' => true,
+                'not null' => true,
+            ),
+            'created_at' => array(
+                'type' => 'datetime',
+                'mysql_type' => 'datetime',
+                'pgsql_type' => 'timestamp without time zone',
+                'not null' => true,
+            ),
+            'gallery' => array(
+                'type' => 'int',
+                'size' => 'big',
+                'description' => 'Gallery Id',
+                'unsigned' => true,
+                'not null' => true,
+            ),
+            'user_id' => array(
+                'type' => 'int',
+                'size' => 'big',
+                'description' => 'User Id',
+                'unsigned' => true,
+                'not null' => true,
+            ),
+            'ip' => array(
+                'type' => 'varchar',
+                'length' => 100,
+                'not null' => true,
+            ),
+            'image' => array(
+                'type' => 'varchar',
+                'length' => 255,
+                'not null' => true,
+            ),
+            'fid' => array(
+                'type' => 'int',
+                'size' => 'big',
+                'description' => 'File Id',
+            ),
+        ),
+        'primary key' => array('id'),
+    );
+
+    return $schema;
+}
+
+/**
+ * Update database schema
+ */
+function rsgallery_update_7000()
+{
+    drupal_install_schema('rsgallery');
+}
+
+/**
+ * Recreate tables
+ */
+function rsgallery_update_7001()
+{
+    db_create_table(RSG_TBL_GALLERY, array(
+        'description' => 'Collection of the galleries',
+        'fields' => array(
+            'id' => array(
+                'type' => 'serial',
+                'size' => 'big',
+                'description' => 'Gallery Id',
+                'unsigned' => true,
+                'not null' => true,
+            ),
+            'created_at' => array(
+                'type' => 'datetime',
+                'mysql_type' => 'datetime',
+                'pgsql_type' => 'timestamp without time zone',
+                'not null' => true,
+            ),
+            'updated_at' => array(
+                'type' => 'datetime',
+                'mysql_type' => 'datetime',
+                'pgsql_type' => 'timestamp without time zone',
+                'not null' => false,
+            ),
+            'user_id' => array(
+                'type' => 'int',
+                'size' => 'big',
+                'description' => 'User Id',
+                'unsigned' => true,
+                'not null' => true,
+            ),
+            'ip' => array(
+                'type' => 'varchar',
+                'length' => 100,
+                'not null' => true,
+            ),
+            'label' => array(
+                'type' => 'varchar',
+                'length' => 255,
+                'not null' => true,
+            ),
+            'image' => array(
+                'type' => 'varchar',
+                'length' => 255,
+                'not null' => true,
+            ),
+            'status' => array(
+                'type' => 'int',
+                'size' => 'normal',
+                'not null' => true,
+                'unsigned' => true,
+            ),
+            'tags' => array(
+                'type' => 'varchar',
+                'length' => 255,
+                'not null' => false,
+            ),
+        ),
+        'primary key' => array('id'),
+    ));
+    db_create_table(RSG_TBL_PICTURE, array(
+            'description' => 'Collection of the pictures',
+            'fields' => array(
+                'id' => array(
+                    'type' => 'serial',
+                    'size' => 'big',
+                    'description' => 'Picture Id',
+                    'unsigned' => true,
+                    'not null' => true,
+                ),
+                'created_at' => array(
+                    'type' => 'datetime',
+                    'mysql_type' => 'datetime',
+                    'pgsql_type' => 'timestamp without time zone',
+                    'not null' => true,
+                ),
+                'gallery' => array(
+                    'type' => 'int',
+                    'size' => 'big',
+                    'description' => 'Gallery Id',
+                    'unsigned' => true,
+                    'not null' => true,
+                ),
+                'user_id' => array(
+                    'type' => 'int',
+                    'size' => 'big',
+                    'description' => 'User Id',
+                    'unsigned' => true,
+                    'not null' => true,
+                ),
+                'ip' => array(
+                    'type' => 'varchar',
+                    'length' => 100,
+                    'not null' => true,
+                ),
+                'image' => array(
+                    'type' => 'varchar',
+                    'length' => 255,
+                    'not null' => true,
+                ),
+                'fid' => array(
+                    'type' => 'int',
+                    'size' => 'big',
+                    'description' => 'File Id',
+                ),
+            ),
+            'primary key' => array('id'),
+        )
+    );
+    return 'Tables created successfully.';
+}
